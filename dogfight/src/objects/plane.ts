@@ -227,6 +227,7 @@ export class Plane extends GameObject {
   private turnDirection: number; // 90 degree angle relative to our current direction and turn path
   private fc: number; // Centripetal force
   public speed: number; // Current speed of the plane
+  public smoothSpeed: number;
 
   // number of elapsed milliseconds since last fuel decrease.
   private fuelCounter: number;
@@ -261,6 +262,7 @@ export class Plane extends GameObject {
     this.turnDirection = 0; // angle towards turn
     this.fc = 0; // centripetal force
     this.speed = magnitude(this.v); // speed
+    this.smoothSpeed = this.speed;
     this.drag =
       this.thrust /
       Math.pow(this.maxSpeed / this.minSpeed, planeGlobals.dragPower); // drag coefficient
@@ -358,6 +360,8 @@ export class Plane extends GameObject {
     const tstep = deltaTime / 1000; // deltatime = milliseconds between frames
     const w0 = planeGlobals.w0;
     this.speed = magnitude(this.v);
+    this.smoothSpeed = (this.smoothSpeed * 20 + this.speed) / 21;
+    console.log("smoothSpeed:", this.smoothSpeed);
 
     // stall detection
     const recoveryAngle = this.engineOn ? this.recoveryAngle : -this.glideAngle;
