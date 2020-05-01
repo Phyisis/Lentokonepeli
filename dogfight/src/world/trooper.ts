@@ -11,8 +11,8 @@ function getTarget(world: GameWorld, trooper: Trooper, radius: number): any {
   const runways = world.runways.filter((runway): boolean => {
     return runway.team != trooper.team;
   });
-  const troopers = world.troopers.filter((trooper): boolean => {
-    return trooper.team != trooper.team;
+  const troopers = world.troopers.filter((troop): boolean => {
+    return troop.team != trooper.team;
   });
   const planes = world.planes.filter((plane): boolean => {
     return plane.team != trooper.team;
